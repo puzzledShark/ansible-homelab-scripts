@@ -1,0 +1,5 @@
+- name: Installing screenfetch
+  ansible.builtin.apt:
+    name: screenfetch
+    state: present
+

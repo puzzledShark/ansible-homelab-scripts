@@ -1,0 +1,10 @@
+misc:
+  hosts:
+    thinShark:
+      ansible_host: 
+      
+plex:
+  hosts:
+    nucShark:
+      ansible_host: 
+  

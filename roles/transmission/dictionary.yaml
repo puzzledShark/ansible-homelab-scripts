@@ -1,0 +1,12 @@
+username: 
+password: 
+vpnprovider: 
+config: 
+localnetwork: 
+datapath: 
+incomplete: 
+watch: 
+home: 
+tcpport: '9091:9091/tcp'
+udpport: '9091:9091/udp'
+

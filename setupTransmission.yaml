@@ -1,0 +1,16 @@
+---
+# This sets up plex docker compose files
+# If you're using network drives mounted on the host itself
+# make sure you add a delay into the service for docker 
+# so that it doesn't try to mount empty volumes into the docker containers
+
+- name: Checking for hosts
+  hosts: all
+  tasks:
+   - name: Ping my hosts
+     ansible.builtin.ping:
+     
+- name: setting ~/plex
+  hosts: misc
+  roles:
+  - role: transmission

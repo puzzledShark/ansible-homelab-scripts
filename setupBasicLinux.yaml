@@ -1,0 +1,25 @@
+---
+# This setups things
+
+- name: Checking for hosts
+  hosts: all
+  tasks:
+   - name: Ping my hosts
+     ansible.builtin.ping:
+
+- name: Setup basic Applications
+  hosts: misc
+  roles:
+  - role: common
+  become: true
+  
+- name: Setting up NAS Connections
+  hosts: misc
+  roles:
+  - role: nasConnections
+  become: true
+  
+- name: setting up DDNS
+  hosts: misc
+  roles:
+  - role: duckdns

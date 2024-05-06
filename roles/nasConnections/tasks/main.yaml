@@ -1,0 +1,20 @@
+- name: Checking to see if directories exist
+  ansible.builtin.stat:
+    path: "{{item}}"
+  loop: "{{ nas_connection_folders }}"
+  register: directory_info
+
+- name: If they do not exist create directories for NAS connections
+  ansible.builtin.file:
+    path: "{{ item.item }}"
+    state: directory
+    mode: '0777'
+  loop: "{{ directory_info.results }}"
+  when: not item.stat.exists
+    
+- name: Creating Links to NAS
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "{{ item }}"
+    state: present
+  loop: "{{ nas_connections }}"

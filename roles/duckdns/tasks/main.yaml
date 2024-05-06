@@ -1,0 +1,30 @@
+- name: Creating directory for duckdns
+  ansible.builtin.file:
+    path: "~/duckdns"
+    state: directory
+    mode: '0755'
+    
+- name: Checking if duck.sh exists
+  ansible.builtin.stat:
+    path: "~/duckdns/duck.sh"
+  register: ducksh_status
+
+- name: Creating duck.sh if it doesn't exist
+  ansible.builtin.file:
+    path: "~/duckdns/duck.sh"
+    state: touch
+    mode: '0700'
+  when: not ducksh_status.stat.exists
+
+- name: Adding logic to file
+  ansible.builtin.lineinfile:
+    path: "~/duckdns/duck.sh"
+    line: 'echo url="https://www.duckdns.org/update?domains={{duckdomain}}&token={{ducktoken}}&ip=" | curl -k -o ~/duckdns/duck.log -K -'
+    state: present
+
+- name: Set up cron job for duckdns script
+  ansible.builtin.cron:
+    name: Run duckdns script every 5 minutes
+    minute: "*/5"
+    job: "~/duckdns/duck.sh >/dev/null 2>&1"
+    state: present

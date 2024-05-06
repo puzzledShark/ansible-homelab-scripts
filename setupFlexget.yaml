@@ -1,0 +1,13 @@
+---
+# This setups things
+
+- name: Checking for hosts
+  hosts: all
+  tasks:
+   - name: Ping my hosts
+     ansible.builtin.ping:
+     
+- name: Setting up flexget
+  hosts: misc
+  roles:
+  - role: flexget
