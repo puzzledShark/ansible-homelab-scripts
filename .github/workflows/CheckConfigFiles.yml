@@ -20,5 +20,5 @@ jobs:
 
         # Loop through each file and compare with main branch
         for file in "${files[@]}"; do
-          git diff --exit-code HEAD -- "$file" || { echo "File $file is different from main branch"; exit 1; }
+          git diff --exit-code origin/main -- "$file" || { echo "File $file is different from main branch"; exit 1; }
         done
