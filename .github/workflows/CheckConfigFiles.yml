@@ -1,0 +1,40 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Check config files and password storage before merge
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: Running script to ensure file integrity
+        run: |
+          # array of files that should not be changed
+          declare -a files=("hosts.yaml", "/role/duckdns/main.yaml", "/role/flexget/dictionary.yaml", "/role//dictionary.yaml", "/role/nasConnections/dictionary.yaml", "/role/plex/dictionary.yaml", "/role/transmision/dictionary.yaml" )
+
+          # loop
+          for file in "${files[@]}"
+          do
+            #check to make sure file is unmodified
+            git diff --exit-code orgin/main "$file"
+            if [ $? -ne 0 ]; then
+              echo "Error: $file has been modified. Please revert the changes before merging."
+              modified=true
+            fi
+          done
+
+          if [ !$modified" = true ]; then
+            exit 1
+          fi
