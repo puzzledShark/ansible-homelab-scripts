@@ -22,7 +22,7 @@ jobs:
       - name: Running script to ensure file integrity
         run: |
           # array of files that should not be changed
-          declare -a files=("hosts.yaml" "role/duckdns/vars/main.yaml" "role/flexget/dictionary.yaml" "role/nasConnections/dictionary.yaml" "role/plex/dictionary.yaml" "role/transmision/dictionary.yaml" )
+          declare -a files=("hosts.yaml" "roles/duckdns/vars/main.yaml" "roles/flexget/dictionary.yaml" "roles/nasConnections/dictionary.yaml" "roles/plex/dictionary.yaml" "roles/transmision/dictionary.yaml" )
 
           # loop
           for file in "${files[@]}"
