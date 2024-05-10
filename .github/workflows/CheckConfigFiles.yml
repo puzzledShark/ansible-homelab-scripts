@@ -27,6 +27,9 @@ jobs:
           # loop
           for file in "${files[@]}"
           do
+            if [ -; "$file" ]; then
+              continue
+            fi
             #check to make sure file is unmodified
             echo "$file"
             git diff --exit-code main "$file"
