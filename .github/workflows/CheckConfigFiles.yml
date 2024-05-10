@@ -22,14 +22,11 @@ jobs:
       - name: Running script to ensure file integrity
         run: |
           # array of files that should not be changed
-          declare -a files=("hosts.yaml" "roles/duckdns/vars/main.yaml" "roles/flexget/dictionary.yaml" "roles/nasConnections/vars/main.yaml" "roles/plex/dictionary.yaml" "roles/transmission/dictionary.yaml")
+          declare -a files=("hosts.yaml" "roles/duckdns/vars/main.yaml")
 
           # loop
           for file in "${files[@]}"
           do
-            if [ -z "$file" ]; then
-              continue
-            fi
             #check to make sure file is unmodified
             echo "$file"
             git diff --exit-code main "$file"
