@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   pull_request_target:
     types: [opened, synchronize, reopened]
-    branches:
-      - main
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -29,7 +27,7 @@ jobs:
           do
             #check to make sure file is unmodified
             echo "$file"
-            git diff --exit-code main "$file"
+            git diff --exit-code origin/main "$file"
             if [ $? -ne 0 ]; then
               echo "Error: $file has been modified. Please revert the changes before merging."
               modified=true
