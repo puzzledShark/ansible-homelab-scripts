@@ -1,0 +1,27 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Fetch main branch
+      run: git fetch origin main:main
+
+    - name: Check files
+      run: |
+        # Array of files/filepaths to check
+        files=("hosts.yaml" "roles/duckdns/vars/main.yaml")
+
+        # Loop through each file and compare with main branch
+        for file in "${files[@]}"; do
+          git diff --exit-code main -- "$file" || { echo "File $file is different from main branch"; exit 1; }
+        done
