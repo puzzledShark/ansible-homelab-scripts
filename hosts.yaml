@@ -6,5 +6,5 @@ misc:
 plex:
   hosts:
     nucShark:
-      ansible_host: 
+      ansible_host: fail test
   
