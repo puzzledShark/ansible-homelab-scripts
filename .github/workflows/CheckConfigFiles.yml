@@ -19,7 +19,7 @@ jobs:
     - name: Check files
       run: |
         # Array of files/filepaths to check
-        files=("hosts.yaml" "roles/duckdns/vars/main.yaml")
+        files=("hosts.yaml" "roles/duckdns/vars/main.yaml" "roles/flexget/dictionary.yaml" "roles/nasConnections/vars.main.yaml" "roles/plex/dictionary.yaml" "roles/transmission/dictionary.yaml")
 
         # Loop through each file and compare with main branch
         for file in "${files[@]}"; do

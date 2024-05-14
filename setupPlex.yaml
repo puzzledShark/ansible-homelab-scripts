@@ -9,5 +9,6 @@
      
 - name: setting ~/plex
   hosts: misc
+  become: true
   roles:
   - role: plex

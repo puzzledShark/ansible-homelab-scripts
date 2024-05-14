@@ -4,12 +4,33 @@
 
 - name: Creating directory for plex
   ansible.builtin.file:
-    path: "~/plex"
+    path: "{{config}}"
     state: directory
     mode: '0777'
 
 - name: Render the docker-compose template
   template:
     src: docker-compose.yaml.j2
-    dest: "~/plex/docker-compose.yml"
+    dest: "{{config}}/docker-compose.yml"
+
+- name: Render the plex-backup script
+  template:
+    src: plex-backup.sh.j2
+    dest: "{{config}}/plex-backup.sh"
+
+- name: Giving script execute permissions
+  file:
+    path: "{{config}}/plex-backup.sh"
+    mode: '0755'
+
+- name: setup crontab for backing up plex data periodically
+  ansible.builtin.cron:
+    name: Run duckdns script sunday at 3am
+    minute: "0"
+    hour: "3"
+    day: "*"
+    month: "*"
+    weekday: "0"
+    job: "{{config}}/plex-backup.sh >/dev/null 2>&1"
+    state: present
 
