@@ -2,3 +2,4 @@ timezone: "Canada/Eastern"
 #Don't put this on a network share, they don't typically support file locking
 config: 
 show_location: 
+backup_location: 
