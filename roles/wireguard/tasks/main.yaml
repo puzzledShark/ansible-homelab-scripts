@@ -1,0 +1,37 @@
+- name: Read the dictionary file
+  include_vars:
+    file: "{{ role_path }}/dictionary.yaml"
+
+- name: Creating directory for wireguard
+  ansible.builtin.file:
+    path: "{{config}}"
+    state: directory
+    mode: '0777'
+
+- name: Render the docker-compose template
+  template:
+    src: docker-compose.yaml.j2
+    dest: "{{config}}/docker-compose.yml"
+
+- name: running wireguard
+  command: docker compose up -d 
+  args:
+    chdir: '{{config}}'
+  
+- name: waiting for peer files to be created
+  pause:
+    minute: 2
+
+- name: grabbing the peer files for use
+  fetch:
+    src: '{{config}}/peer{{item}}/peer{{item}}.conf'
+    dest: 'roles/wireguard/files/peer{{item}}.conf'
+    flat: yes
+  loop: "{{ range(1, peersCount + 1 ) | list }}"
+
+- name: grabbing the peer files for use
+  fetch:
+    src: '{{config}}/peer{{item}}/peer{{item}}.png'
+    dest: 'roles/wireguard/files/peer{{item}}.png'
+    flat: yes
+  loop: "{{ range(1, peersCount + 1 ) | list }}"

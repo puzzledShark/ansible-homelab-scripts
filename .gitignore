@@ -1,1 +1,2 @@
 roles/flexget/templates/config.yml.j2
+roles/wireguard/files

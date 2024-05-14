@@ -1,0 +1,14 @@
+---
+# This setups things
+
+- name: Checking for hosts
+  hosts: all
+  tasks:
+   - name: Ping my hosts
+     ansible.builtin.ping:
+     
+- name: setting ~/wireguard
+  hosts: misc
+  become: true
+  roles:
+  - role: wireguard
