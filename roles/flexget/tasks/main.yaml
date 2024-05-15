@@ -4,11 +4,32 @@
 
 - name: Creating directory for flexget
   ansible.builtin.file:
-    path: "~/flexget"
+    path: "{{config}}"
     state: directory
     mode: '0777'
 
 - name: Render the docker-compose template
   template:
     src: docker-compose.yaml.j2
-    dest: "~/flexget/docker-compose.yml"
+    dest: "{{config}}/docker-compose.yml"
+
+- name: Render the flexget-backup script
+  template:
+    src: flexget-backup.sh.j2
+    dest: "{{config}}/flexget-backup.sh"
+
+- name: Giving script execute permissions
+  file:
+    path: "{{config}}/flexget-backup.sh"
+    mode: '0755'
+
+- name: adding crontab to backup config 
+  ansible.builtin.cron:
+    name: Backup flexget config every sunday at 3am
+    minute: "0"
+    hour: "3"
+    day: "*"
+    month: "*"
+    weekday: "0"
+    job: "{{config}}/flexget-backup.sh >/dev/null 2>&1"
+    state: present

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Define source and destination directories
+SOURCE_DIR="{{config}}/"
+DEST_DIR="{{backup_location}}/"
+
+# Log file to store the backup log
+LOG_FILE="{{config}}/backup.log"
+
+# Current date for the log
+DATE=$(date '+%Y-%m-%d %H:%M:%S')
+
+# Perform the backup using rsync
+rsync -avh --delete "$SOURCE_DIR" "$DEST_DIR" &>> "$LOG_FILE"
+
+# Check if rsync command was successful
+if [ $? -eq 0 ]; then
+    echo "$DATE - Backup successful" >> "$LOG_FILE"
+else
+    echo "$DATE - Backup failed" >> "$LOG_FILE"
+fi

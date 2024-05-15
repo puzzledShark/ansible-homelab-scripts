@@ -9,5 +9,6 @@
      
 - name: Setting up flexget
   hosts: misc
+  become: true
   roles:
   - role: flexget
