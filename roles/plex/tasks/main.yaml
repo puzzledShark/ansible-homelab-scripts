@@ -25,7 +25,7 @@
 
 - name: setup crontab for backing up plex data periodically
   ansible.builtin.cron:
-    name: Run duckdns script sunday at 3am
+    name: Backup plex configs every sunday at 3am
     minute: "0"
     hour: "3"
     day: "*"
